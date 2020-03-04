@@ -1,0 +1,9 @@
+<h3>Create post</h3>
+<form [formGroup]="newPostForm" (ngSubmit)="createPost(newPostForm.value)">
+  <div class="spacer">
+    <textarea placeholder="Enter post" formControlName="text"></textarea>
+  </div>
+  <div class="spacer">
+    <button type="submit">Create</button>
+  </div>
+</form>

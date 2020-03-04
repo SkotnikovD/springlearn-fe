@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+// @use 'base';
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    }
+.header {
+    grid-column: span 12;
+    }
+// .navigation-menu {
+//     grid-column: span 4;
+//     }
+.main-content {
+    grid-column: span 12;
+    }
+.footer {
+    grid-column: span 12;
+    }
+
+* {
+    font-family: 'Roboto', Arial, sans-serif;
+    // color: $font_color;
+    color: #616161;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    }

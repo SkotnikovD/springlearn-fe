@@ -1,0 +1,14 @@
+<div>
+    <p>
+        <a [routerLink]="['/createPost']">Create Post</a>
+    </p>
+</div>
+<div class="post-list">
+    <div class="post" *ngFor="let post of postService.posts">
+        <h3>{{post.userName}}</h3>
+        <div class="post-text">
+            {{post.text}}
+        </div>
+        {{post.createdDate}}
+    </div>
+</div>
