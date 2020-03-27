@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClientModule, HttpClient} from '@angular/common/http'
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from './../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  uri = 'http://localhost:8080/api';
-  usersUri = 'http://localhost:8080/api/users';
+  usersUri = environment.apiUrl+'users';
   token;
  
   constructor(
@@ -21,7 +21,7 @@ export class AuthService {
     authToken = this.authTokenSource.asObservable();
 
   login(email: string, password: string) {
-    this.http.post(this.uri + '/signin', {login: email, password: password}, {observe:'response'})
+    this.http.post(environment.apiUrl + '/signin', {login: email, password: password}, {observe:'response'})
     .subscribe((resp: any) => {
       localStorage.setItem('auth_token', resp.headers.get('Authorization'));
       this.authTokenSource.next(localStorage.getItem('auth_token'));
