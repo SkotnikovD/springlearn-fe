@@ -14,6 +14,14 @@ export class PostsComponent implements OnInit {
     private postService : PostService,
   ) { }
 
+  posts;
+
   ngOnInit() {
+    this.postService.newPostAdded.subscribe(id=>this.getPosts());
+    this.getPosts();
+  }
+
+  getPosts() {
+    this.postService.getPosts().subscribe(posts=>this.posts=posts);
   }
 }

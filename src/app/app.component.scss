@@ -1,5 +1,45 @@
-h1 {
-  color: rgb(34, 33, 33);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+@import "src/base";
+
+#create-post-btn{
+  margin: 10px 0 0 10px;
+  position: fixed;
+  text-align: center;
 }
+
+.content-container {
+  display: grid;
+  // grid-template-columns: 1fr minmax(min-content, max-content) minmax(min-content, 1fr);
+  background-color: $background_color_main;
+  grid-column-gap: 10px;
+  grid-template-columns: minmax(min-content, max-content) minmax(min-content, max-content) minmax(min-content, max-content);
+  justify-content: center;
+  // grid-auto-rows: minmax(min-content, max-content);
+  }
+
+.header-stub-wrapper {
+  height: 120px;
+  width: 100%;
+  background-color: $main_color;
+  
+  // border:3px solid greenyellow;
+  }
+
+.header{
+  position:fixed;
+  height: 120px;
+  width: 100%;
+}
+
+.main-content {
+  width: 700px;
+  border:3px solid black;
+  grid-column: span 1;
+  }
+  
+.right-content, .left-content{
+  grid-column: span 1;
+  border:3px solid red;
+  width: 200px;
+}
+//   .footer {
+// }

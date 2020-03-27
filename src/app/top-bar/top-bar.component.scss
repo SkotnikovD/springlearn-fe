@@ -1,7 +1,8 @@
-// @use 'base';
+@import "src/base";
 .top-bar {
-    // background-color: $main_color;
-    background-color: #3857a6;
-    height: 100px;
     padding: 10px;
+}
+
+h2{
+    color: rgb(255, 255, 255)
 }

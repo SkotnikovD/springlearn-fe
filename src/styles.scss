@@ -1,28 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
-// @use 'base';
-
-.container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    }
-.header {
-    grid-column: span 12;
-    }
-// .navigation-menu {
-//     grid-column: span 4;
-//     }
-.main-content {
-    grid-column: span 12;
-    }
-.footer {
-    grid-column: span 12;
-    }
-
+@import "src/base";
+html{
+  background-color: $background_color_main;
+}
 * {
     font-family: 'Roboto', Arial, sans-serif;
-    // color: $font_color;
-    color: #616161;
-    box-sizing: border-box;
+    color: $font_color;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box; //чтобы размер блока включал отступы и границы
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     }
+
+    /* Button */
+.button, button {
+    // display: inline-flex;
+    // align-items: center;
+    // text-align:center;
+    
+    padding: 8px 16px;
+    margin: 0px 0px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    color: $main_color;
+    border-color: $main_color;
+    border: 1px solid;
+    min-width: 8em;
+  }
+  
+  .button:hover, button:hover {
+    opacity: 0.8;
+    font-weight: normal;
+    text-decoration: none;
+  }
+  
+  .button:disabled, button:disabled {
+    opacity: 0.5;
+    cursor: auto;
+  }
+  
+  /* Fancy Button */
+  
+  .fancy-button {
+    background-color: white;
+    color: $main_color;
+    min-width: 8em;
+  }
+  
+  .fancy-button i.material-icons {
+    color: $main_color;
+    padding-right: 4px;
+  }
+
+  .fancy-button:hover {
+    text-decoration: none;
+  }
+
+  .spacer {
+    margin-top: 15px;
+  }

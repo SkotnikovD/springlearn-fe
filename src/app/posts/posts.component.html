@@ -1,14 +1,11 @@
-<div>
-    <p>
-        <a [routerLink]="['/createPost']">Create Post</a>
-    </p>
-</div>
 <div class="post-list">
-    <div class="post" *ngFor="let post of postService.posts">
-        <h3>{{post.userName}}</h3>
+    <div class="post-item " *ngFor="let post of posts">
+        <h5>{{post.userName}}</h5>
         <div class="post-text">
             {{post.text}}
         </div>
-        {{post.createdDate}}
+        <div class="post-date">
+            {{post.createdDate | date}}
+        </div>
     </div>
 </div>

@@ -2,13 +2,14 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { BehaviorSubject } from 'rxjs';
+import { User } from './models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  currentUser=null; 
+  currentUser: User; 
 
   
 constructor(
@@ -21,19 +22,24 @@ constructor(
         if(authToken==null){
           this.currentUser = null;
         } else{
-          this.getCurrentUser();
+          this.renewCurrentUser();
         }
       }); 
 
   }
 
-getCurrentUser(){
+private renewCurrentUser(){
   let httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('auth_token') 
     })
   };
-  this.http.get('http://localhost:8080/api/users/current', httpOptions).subscribe(user=>this.currentUser=user);
-}  
+  this.http.get<User>('http://localhost:8080/api/users/current', httpOptions).subscribe(user=>this.currentUser=user);
+} 
+
+getCurrentUser(): User{
+  return this.currentUser
+}
+
 }

@@ -1,10 +1,13 @@
 <div class="top-bar">
-    <h2 class="top-bar__site-title">The World is listening...</h2>
-    <button class="top-bar__login" *ngIf="!authService.isLogin()" href="/login">Login</button>
-    <button class="top-bar__signup" *ngIf="!authService.isLogin()" href="/signup"> Sign up</button>
-    <button class="top-bar__logout" *ngIf="authService.isLogin()" (click)="authService.logout()">Logout</button>
-    <label *ngIf="userService.currentUser!=null" >Hello, {{userService.currentUser.login}}</label>
-    <a [routerLink]="['/login']" class="button fancy-button">
-        Login <i class="material-icons">double_arrow</i>
-      </a>
+    <a [routerLink]="['/']" class="site-title"><h2>The World is listening...</h2></a>
+  
+    <a [routerLink]="['/signup']" class="button fancy-button"  *ngIf="!isLogin()"> 
+      Sign Up    
+    </a>
+
+    <button class="button fancy-button" *ngIf="isLogin()" (click)="logout()">Logout</button>
+    <label *ngIf="currentUser!=null" >Hello, {{currentUser.login}}</label>
+    <a [routerLink]="['/login']" class="button fancy-button"  *ngIf="!isLogin()"> 
+        Login
+    </a>
 </div>

@@ -1,5 +1,23 @@
-<app-top-bar></app-top-bar>
+<div class="app-container">
+  <div class="header-stub-wrapper">
+    <div class="header">
+      <app-top-bar></app-top-bar>
+    </div>
+  </div>
 
-<div class="container">
-  <router-outlet></router-outlet>
+  <div class="content-container">
+    <div class="left-content">
+    </div>
+
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+
+    <div class="right-content">
+      <a [routerLink]="['/createPost']"><button class="button fancy-button" id="create-post-btn">Create Post</button></a>
+    </div>
+  </div>
+
+
+
 </div>

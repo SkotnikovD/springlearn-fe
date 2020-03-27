@@ -1,0 +1,31 @@
+@import "src/base";
+
+.post-list{
+    // overflow-y: auto;
+    // height: 100%
+}
+.post-item{
+    background-color: rgb(255, 255, 255);
+    padding: 20px 20px 0px 20px;
+    margin: 8px;
+    border-radius: 4px;
+}
+
+.post-text{
+    margin: 25px 0 25px 25px;
+    border-radius: 4px;
+    word-wrap: break-word;
+}
+
+.post-date{
+    // float: right;
+    text-align: end;
+    padding: 10px 0;
+    border-top: 1px solid black;
+}
+.date{
+    // margin:0 0 0 auto;
+    // float: right;
+    // margin: 0 0 0px 0;
+    
+}
