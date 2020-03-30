@@ -11,7 +11,7 @@ import { environment } from './../environments/environment';
 })
 export class PostService {
 
-  private postsUrl = environment.apiUrl+'posts';
+  private postsUrl = environment.apiUrl+'posts/';
 
 constructor(
   private http: HttpClient,

@@ -21,7 +21,7 @@ export class AuthService {
     authToken = this.authTokenSource.asObservable();
 
   login(email: string, password: string) {
-    this.http.post(environment.apiUrl + '/signin', {login: email, password: password}, {observe:'response'})
+    this.http.post(environment.apiUrl + 'signin/', {login: email, password: password}, {observe:'response'})
     .subscribe((resp: any) => {
       localStorage.setItem('auth_token', resp.headers.get('Authorization'));
       this.authTokenSource.next(localStorage.getItem('auth_token'));
@@ -33,7 +33,7 @@ export class AuthService {
     }
 
   signup(name:string, email: string, password: string){
-    this.http.post(this.usersUri + '/signup', {name: name, login: email, password: password}) 
+    this.http.post(this.usersUri + 'signup/', {name: name, login: email, password: password}) 
     .subscribe((resp: any) => {
       this.login(email, password);
       })
