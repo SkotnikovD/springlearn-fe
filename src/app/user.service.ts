@@ -36,7 +36,7 @@ private renewCurrentUser(){
       'Authorization': localStorage.getItem('auth_token') 
     })
   };
-  this.http.get<User>(environment.apiUrl+'current', httpOptions).subscribe(user=>this.currentUser=user);
+  this.http.get<User>(environment.apiUrl+'/current', httpOptions).subscribe(user=>this.currentUser=user);
 } 
 
 getCurrentUser(): User{
