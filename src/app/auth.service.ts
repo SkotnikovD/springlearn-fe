@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClientModule, HttpClient} from '@angular/common/http'
+import {HttpClientModule, HttpClient, HttpResponse, HttpHeaders} from '@angular/common/http'
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from './../environments/environment';
+import { tap, map, mergeMap } from 'rxjs/operators';
+import { AvatarService } from './avatar.service';
+import { User } from './models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,42 +17,53 @@ export class AuthService {
  
   constructor(
     private http: HttpClient,
-    private router: Router,
-    ) { }
-
-    private authTokenSource = new BehaviorSubject(localStorage.getItem('auth_token'));
-    authToken = this.authTokenSource.asObservable();
-
-  login(email: string, password: string) {
-    this.http.post(environment.apiUrl + '/signin', {login: email, password: password}, {observe:'response'})
-    .subscribe((resp: any) => {
-      localStorage.setItem('auth_token', resp.headers.get('Authorization'));
-      this.authTokenSource.next(localStorage.getItem('auth_token'));
-      // this.userService.getCurrentUser().subscribe((resp: any) => {
-      //   console.log(resp);
-      //   this.authorisedUserSource.next(resp);})
-      this.router.navigate(['']);
-      })
+    private avatarService: AvatarService, 
+    ) {
+      if (this.isLogin()) this.renewCurrentUser();
     }
 
-  signup(name:string, email: string, password: string){
-    this.http.post(this.usersUri + '/signup', {name: name, login: email, password: password}) 
-    .subscribe((resp: any) => {
-      this.login(email, password);
-      })
+    private currentUser = new BehaviorSubject<User>(null);
+    currentUser$: Observable<User> = this.currentUser.asObservable(); 
+
+    login(email: string, password: string) : Observable<HttpResponse<void>> { 
+    return this.http.post<void>(environment.apiUrl + '/signin', {login: email, password: password}, {observe:'response'})
+    .pipe(tap((resp: HttpResponse<void>)=>{
+      localStorage.setItem('auth_token', resp.headers.get('Authorization'));
+      this.renewCurrentUser();
+    }));
+    }
+
+  signup(name:string, email: string, password: string, avatar: File) : Observable<HttpResponse<void>>{ 
+    return this.http.post<User>(this.usersUri + '/signup', {name: name, login: email, password: password})
+    .pipe(mergeMap((resp: User)=>{
+      var loginResp: Observable<HttpResponse<void>> = this.login(email, password).pipe(tap(()=>{if (avatar) this.avatarService.uploadAvatar(avatar).subscribe(avatarUploaded=>this.renewCurrentUser())}))
+      //loginResp.subscribe(()=>{if (avatar) this.avatarService.uploadAvatar(avatar).subscribe(avatarUploaded=>this.renewCurrentUser())});
+      return loginResp;
+    }))
   }
 
-    logout() {
+    logout(): void {
       localStorage.removeItem('auth_token');
-      this.authTokenSource.next(null);
+      this.currentUser.next(null);
     }
    
-    public isLogin(): boolean {
+    isLogin(): boolean {
       return (localStorage.getItem('auth_token') !== null);
-      // return !this.authTokenSource.getValue==null
     }
 
     getAuthorizationToken(): string{
-     return this.authTokenSource.value;
+     return localStorage.getItem('auth_token')
     }
+
+    renewCurrentUser(): Observable<User>{
+      let httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('auth_token') 
+        })
+      };
+      this.http.get<User>(environment.apiUrl+'/users/current', httpOptions).subscribe(user=>this.currentUser.next(user));
+      return this.currentUser$;
+    } 
+
 }

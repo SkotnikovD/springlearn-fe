@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
-import { UserService } from '../user.service';
 import { User } from '../models/user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-top-bar',
@@ -10,15 +10,16 @@ import { User } from '../models/user';
 })
 export class TopBarComponent implements OnInit {
 
+  currentUser$: Observable<User>;
+  
   constructor(
-    private userService: UserService,
     private authService: AuthService,
-  ) { }
-
-  currentUser: User;
+  ) { 
+    this.currentUser$ = this.authService.currentUser$;
+  }
 
   ngOnInit() {
-    this.currentUser = this.userService.currentUser;
+    // this.currentUser$ = this.authService.currentUser$;
   }
 
   isLogin():boolean{

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from "../post.service";
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { Post } from '../models/post';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -14,14 +16,13 @@ export class PostsComponent implements OnInit {
     private postService : PostService,
   ) { }
 
-  posts;
+  posts : Observable<Post[]>;
 
   ngOnInit() {
-    this.postService.newPostAdded.subscribe(id=>this.getPosts());
     this.getPosts();
   }
 
   getPosts() {
-    this.postService.getPosts().subscribe(posts=>this.posts=posts);
+    this.posts = this.postService.getPosts();
   }
 }

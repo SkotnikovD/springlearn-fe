@@ -22,8 +22,7 @@ export class NewPostComponent implements OnInit {
   }
 
   createPost(post){
-    this.postService.createPost(post);
-    this.router.navigate(['']);
+    this.postService.createPost(post).subscribe(()=>this.router.navigate(['']));
   }
 
   ngOnInit() {

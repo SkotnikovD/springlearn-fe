@@ -14,6 +14,13 @@
     <input type="password" placeholder="password" formControlName="password" class="form-control"/>
   </div>
   <div class="spacer">
-    <button type="submit" class="button fancy-button" >Sign up</button>
+    <p>Select avatar</p>
+    <input #imageInput
+         type="file"
+         accept="image/png,image/jpeg"
+         (change)="uploadAvatar(imageInput)">
+  </div>
+  <div class="spacer">
+    <button type="submit" class="button fancy-button right_aligned" >Sign up</button>
   </div>
 </form>

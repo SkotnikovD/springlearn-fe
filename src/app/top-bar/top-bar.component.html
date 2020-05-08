@@ -1,12 +1,13 @@
 <div class="top-bar">
-    <a [routerLink]="['/']" class="site-title"><h2>The World is listening...</h2></a>
+    <a [routerLink]="['/']" class="site-title"><h3>The World is listening...</h3></a>
   
     <a [routerLink]="['/signup']" class="button fancy-button"  *ngIf="!isLogin()"> 
       Sign Up    
     </a>
 
     <button class="button fancy-button" *ngIf="isLogin()" (click)="logout()">Logout</button>
-    <label *ngIf="currentUser!=null" >Hello, {{currentUser.login}}</label>
+    <label *ngIf="(currentUser$ | async) !=null" >Hello, {{(currentUser$ | async).name}}</label>
+    <img class="avatar" *ngIf="(currentUser$ | async)?.avatarThumbnailUrl!=null" src="{{(currentUser$ | async).avatarThumbnailUrl}}"> 
     <a [routerLink]="['/login']" class="button fancy-button"  *ngIf="!isLogin()"> 
         Login
     </a>

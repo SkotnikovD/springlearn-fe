@@ -14,6 +14,7 @@ import { UserService } from './user.service';
 import { NewPostComponent } from './new-post/new-post.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthGuardService } from './auth-guard.service';
+import { AvatarService } from './avatar.service';
 
 @NgModule({
    imports: [
@@ -35,6 +36,7 @@ import { AuthGuardService } from './auth-guard.service';
       AuthService,
       UserService,
       AuthGuardService,
+      AvatarService,
    ],
    bootstrap: [
       AppComponent

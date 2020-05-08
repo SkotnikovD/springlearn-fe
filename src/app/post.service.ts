@@ -19,7 +19,7 @@ constructor(
 ) { 
 }
 
-newPostAdded: Subject<number> = new Subject<number>();
+// newPostAdded: Subject<number> = new Subject<number>();
 
 getPosts(): Observable<Post[]> {
   return this.http.get<Post[]>(this.postsUrl)
@@ -35,12 +35,10 @@ createPost(post: Post): Observable<number>{
       'Authorization': this.authService.getAuthorizationToken()
     })
   }; 
-  let res = this.http.post<number>(this.postsUrl, post, httpOptions)
+  return this.http.post<number>(this.postsUrl, post, httpOptions)
   .pipe(
     catchError(this.handleError<number>('createPost', null))
     );
-  res.subscribe(id=>this.newPostAdded.next(id));
-  return res;
 }
 
 /**
