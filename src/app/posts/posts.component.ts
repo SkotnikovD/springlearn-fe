@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Post } from '../models/post';
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-posts',
@@ -11,18 +12,23 @@ import { Observable } from 'rxjs';
   styleUrls: ['./posts.component.scss']
 })
 export class PostsComponent implements OnInit {
-
+  
+  currentUser$: Observable<User>;
+  
   constructor(
     private postService : PostService,
-  ) { }
+    private authService : AuthService,
+  ) { 
+    this.currentUser$ = this.authService.currentUser$;
+  }
 
   posts : Observable<Post[]>;
 
   ngOnInit() {
-    this.getPosts();
+    this.posts = this.postService.getPosts();
   }
 
-  getPosts() {
-    this.posts = this.postService.getPosts();
+  deletePost(post: Post): void{
+    this.postService.deletePost(post.postId).subscribe(undef=>this.posts = this.postService.getPosts())
   }
 }

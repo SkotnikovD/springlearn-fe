@@ -41,6 +41,19 @@ createPost(post: Post): Observable<number>{
     );
 }
 
+deletePost(postId: number): Observable<void>{
+  let httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.authService.getAuthorizationToken()
+    })
+  }; 
+  return this.http.delete<void>(this.postsUrl+'/'+postId, httpOptions)
+  .pipe(
+    catchError(this.handleError<void>('delete post', null))
+    );
+}
+
 /**
  * Handle Http operation that failed.
  * Let the app continue.
