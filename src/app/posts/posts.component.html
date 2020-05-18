@@ -2,7 +2,7 @@
     <div class="post-item " *ngFor="let post of posts | async">
         <img class="avatar" *ngIf="!post.author.avatarThumbnailUrl" src="https://avatars-thumbnail.s3-eu-west-1.amazonaws.com/avatar.png">
         <img class="avatar" *ngIf="post.author.avatarThumbnailUrl" src="{{post.author.avatarThumbnailUrl}}">
-        <span class="username"> {{post.author.firstName}}</span>
+        <span class="username"> {{post.author.name}}</span>
         <button *ngIf="(currentUser$ | async)?.roles.includes('ADMIN')" (click)="deletePost(post)" type="button" class="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

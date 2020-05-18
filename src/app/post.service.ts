@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
-import { Post } from './models/post';
+import { PostWithAuthor } from './models/post';
 import { environment } from './../environments/environment';
 
 @Injectable({
@@ -21,14 +21,14 @@ constructor(
 
 // newPostAdded: Subject<number> = new Subject<number>();
 
-getPosts(): Observable<Post[]> {
-  return this.http.get<Post[]>(this.postsUrl)
+getPosts(): Observable<PostWithAuthor[]> {
+  return this.http.get<PostWithAuthor[]>(this.postsUrl)
   .pipe(
-    catchError(this.handleError<Post[]>('getPosts', []))
+    catchError(this.handleError<PostWithAuthor[]>('getPosts', []))
     )
 }
 
-createPost(post: Post): Observable<number>{
+createPost(post: PostWithAuthor): Observable<number>{
   let httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

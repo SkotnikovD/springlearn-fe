@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from "../post.service";
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { Post } from '../models/post';
+import { PostWithAuthor } from '../models/post';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
 
@@ -22,13 +22,13 @@ export class PostsComponent implements OnInit {
     this.currentUser$ = this.authService.currentUser$;
   }
 
-  posts : Observable<Post[]>;
+  posts : Observable<PostWithAuthor[]>;
 
   ngOnInit() {
     this.posts = this.postService.getPosts();
   }
 
-  deletePost(post: Post): void{
+  deletePost(post: PostWithAuthor): void{
     this.postService.deletePost(post.postId).subscribe(undef=>this.posts = this.postService.getPosts())
   }
 }
