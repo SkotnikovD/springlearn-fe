@@ -4,14 +4,45 @@
   <div class="spacer">
     <label for="name">Name</label>
     <input type="text" class="form-control" placeholder="name" formControlName="name">
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+      
+      <div *ngIf="name.errors.minlength">
+        One symbol names are not allowed
+      </div>
+      <div *ngIf="name.errors.required">
+        Enter your name
+      </div>
+      <div *ngIf="name.errors.maxlength">
+        Name must be less then 50 characters
+      </div>
+    </div>
   </div>
   <div class="spacer">
     <label for="email">Email</label>
     <input type="text" class="form-control" placeholder="email" formControlName="login">
+    <div *ngIf="login.invalid && (login.dirty || login.touched)" class="alert alert-danger">
+      <div *ngIf="login.errors.required">
+        Enter your email
+      </div>
+      <div *ngIf="login.errors.maxlength">
+        Email must be less then 50 characters
+      </div>
+    </div>
   </div>
   <div class="spacer">
     <label for="password">Password</label>
     <input type="password" placeholder="password" formControlName="password" class="form-control"/>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+      <div *ngIf="password.errors.required">
+        Enter your password
+      </div>
+      <div *ngIf="password.errors.minlength">
+        Password must be at least 3 characters long
+      </div>
+      <div *ngIf="password.errors.maxlength">
+        Password must be less then 50 characters
+      </div>
+    </div>
   </div>
   <div class="spacer">
     <p>Select avatar</p>

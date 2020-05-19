@@ -1,12 +1,31 @@
 <h3>Login</h3>
-<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+<form [formGroup]="loginForm" (ngSubmit)="doLogin(loginForm.value)">
   <div class="spacer">
-    <label for="Email">Email</label>
+    <label for="login">Email</label>
     <input type="text" class="form-control" placeholder="email" formControlName="login">
+  </div>
+  <div *ngIf="login.invalid && (login.dirty || login.touched)" class="alert alert-danger">
+    <div *ngIf="login.errors.required">
+      Enter your email
+    </div>
+    <div *ngIf="login.errors.maxlength">
+      Email must be less then 50 characters
+    </div>
   </div>
   <div class="spacer">
     <label for="password">Password</label>
     <input type="password" placeholder="password" formControlName="password" class="form-control"/>
+  </div>
+  <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+    <div *ngIf="password.errors.required">
+      Enter your password
+    </div>
+    <div *ngIf="password.errors.minlength">
+      Password must be at least 3 characters long
+    </div>
+    <div *ngIf="password.errors.maxlength">
+      Password must be less then 50 characters
+    </div>
   </div>
   <div class="spacer">
     <button  type="submit" class="button fancy-button" >Login</button>

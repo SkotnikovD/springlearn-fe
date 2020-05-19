@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class NewPostComponent implements OnInit {
     private router: Router,) 
     { 
     this.newPostForm=formBuilder.group({
-      'text' : ''
+      'text' : [null, Validators.required]
     })
   }
 
@@ -27,5 +27,7 @@ export class NewPostComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  get postText() { return this.newPostForm.get('text'); }
 
 }

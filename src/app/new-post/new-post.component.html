@@ -1,7 +1,12 @@
 <h3>Create post</h3>
 <form [formGroup]="newPostForm" (ngSubmit)="createPost(newPostForm.value)">
   <div class="spacer">
-    <textarea placeholder="Enter post"  class="form-control" formControlName="text"></textarea>
+    <textarea id="postText" placeholder="Enter post" class="form-control" formControlName="text"></textarea>
+    <div *ngIf="postText.invalid && (postText.dirty || postText.touched)" class="alert alert-danger">
+      <div *ngIf="postText.errors.required">
+        Enter post text.
+      </div>
+    </div>
   </div>
   <div class="spacer">
     <button type="submit" class="button fancy-button">Create</button>

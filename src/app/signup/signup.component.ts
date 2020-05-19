@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { handleError } from '../error-handler';
+import { catchError } from 'rxjs/operators';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) {}
@@ -22,9 +24,9 @@ export class SignupComponent implements OnInit {
     private authService : AuthService,
     private router: Router) { 
     this.signupForm=formBuilder.group({
-      'name' : '',
-      'login' : '',
-      'password' : '',
+      'name' : [null, [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      'login' : [null, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      'password' : [null, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
     })
   }
 
@@ -33,7 +35,8 @@ export class SignupComponent implements OnInit {
 
   signup(signupInfo){
     this.authService.signup(signupInfo.name, signupInfo.login, signupInfo.password, this.selectedFile ? this.selectedFile.file : undefined)
-    .subscribe(resp=> this.router.navigate(['']));
+    .subscribe(resp=> this.router.navigate(['']),
+    error=> {console.error(error);  alert (`Error: ${error.error.clientMessage}`)});
   }
 
   uploadAvatar(imageInput: any) {
@@ -46,5 +49,11 @@ export class SignupComponent implements OnInit {
 
     reader.readAsDataURL(file);
   }
+
+  get name() { return this.signupForm.get('name'); }
+
+  get login() { return this.signupForm.get('login'); }
+
+  get password() { return this.signupForm.get('password'); }
 
 }

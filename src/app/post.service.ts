@@ -1,10 +1,11 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { PostWithAuthor } from './models/post';
 import { environment } from './../environments/environment';
+import { handleError, handleErrorAndRethrow } from './error-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,11 @@ constructor(
 ) { 
 }
 
-// newPostAdded: Subject<number> = new Subject<number>();
-
 getPosts(): Observable<PostWithAuthor[]> {
   return this.http.get<PostWithAuthor[]>(this.postsUrl)
   .pipe(
-    catchError(this.handleError<PostWithAuthor[]>('getPosts', []))
-    )
+    // catchError(handleError<PostWithAuthor[]>([]))
+  );
 }
 
 createPost(post: PostWithAuthor): Observable<number>{
@@ -37,8 +36,8 @@ createPost(post: PostWithAuthor): Observable<number>{
   }; 
   return this.http.post<number>(this.postsUrl, post, httpOptions)
   .pipe(
-    catchError(this.handleError<number>('createPost', null))
-    );
+    // catchError(handleErrorAndRethrow())
+  );
 }
 
 deletePost(postId: number): Observable<void>{
@@ -50,28 +49,8 @@ deletePost(postId: number): Observable<void>{
   }; 
   return this.http.delete<void>(this.postsUrl+'/'+postId, httpOptions)
   .pipe(
-    catchError(this.handleError<void>('delete post', null))
+    // catchError(handleError<void>(null))
     );
 }
-
-/**
- * Handle Http operation that failed.
- * Let the app continue.
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
-private handleError<T> (operation = 'operation', result?: T) {
-  return (error: any): Observable<T> => {
-
-    // TODO: send the error to remote logging infrastructure
-    console.error(error); 
-
-    alert(`${operation} failed: ${error.message}`);
-
-    // Let the app keep running by returning an empty result.
-    return of(result as T);
-  };
-}
-
 }
 

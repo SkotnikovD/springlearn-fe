@@ -3,9 +3,10 @@ import {HttpClientModule, HttpClient, HttpResponse, HttpHeaders} from '@angular/
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from './../environments/environment';
-import { tap, map, mergeMap } from 'rxjs/operators';
+import { tap, map, mergeMap, catchError } from 'rxjs/operators';
 import { AvatarService } from './avatar.service';
 import { User } from './models/user';
+import { handleError, handleErrorAndRethrow } from './error-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class AuthService {
 
     login(email: string, password: string) : Observable<HttpResponse<void>> { 
     return this.http.post<void>(environment.apiUrl + '/signin', {login: email, password: password}, {observe:'response'})
-    .pipe(tap((resp: HttpResponse<void>)=>{
+    .pipe(
+      tap((resp: HttpResponse<void>)=>{
       localStorage.setItem('auth_token', resp.headers.get('Authorization'));
       this.renewCurrentUser();
     }));
