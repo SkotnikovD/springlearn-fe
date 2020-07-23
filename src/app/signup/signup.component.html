@@ -1,5 +1,9 @@
 
 <h3>Sign up</h3>
+<a id="gsignin_btn" (click)="signUpWithGoogle()"> <img src="assets/img/gsignin.png"/></a>
+
+<hr class="hr-text" data-content="OR">
+
 <form [formGroup]="signupForm" (ngSubmit)="signup(signupForm.value)">
   <div class="spacer">
     <label for="name">Name</label>
@@ -54,4 +58,6 @@
   <div class="spacer">
     <button type="submit" class="button fancy-button right_aligned" >Sign up</button>
   </div>
+
+  
 </form>

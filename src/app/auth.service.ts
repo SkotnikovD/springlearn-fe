@@ -7,6 +7,7 @@ import { tap, map, mergeMap, catchError } from 'rxjs/operators';
 import { AvatarService } from './avatar.service';
 import { User } from './models/user';
 import { handleError, handleErrorAndRethrow } from './error-handler';
+import { SocialAuthService, GoogleLoginProvider } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -18,20 +19,30 @@ export class AuthService {
  
   constructor(
     private http: HttpClient,
-    private avatarService: AvatarService, 
+    private avatarService: AvatarService,
+    private socialAuthService: SocialAuthService, 
     ) {
       if (this.isLogin()) this.renewCurrentUser();
     }
 
     private currentUser = new BehaviorSubject<User>(null);
     currentUser$: Observable<User> = this.currentUser.asObservable(); 
+    
+    signinWithGoogle() {
+      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(socialUser=>{
+        this.http.put<void>(environment.apiUrl + '/auth/google/tokensignin', socialUser.idToken, {observe:'response'}).pipe(
+          tap(resp=>{localStorage.setItem('auth_token', resp.headers.get('Authorization'));
+          this.renewCurrentUser();})
+        ).subscribe(null,error=> {console.error(error);  alert (`Error: ${error}`)})
+      })
+    }
 
     login(email: string, password: string) : Observable<HttpResponse<void>> { 
     return this.http.post<void>(environment.apiUrl + '/signin', {login: email, password: password}, {observe:'response'})
     .pipe(
       tap((resp: HttpResponse<void>)=>{
-      localStorage.setItem('auth_token', resp.headers.get('Authorization'));
-      this.renewCurrentUser();
+        localStorage.setItem('auth_token', resp.headers.get('Authorization'));
+        this.renewCurrentUser();
     }));
     }
 
@@ -64,7 +75,7 @@ export class AuthService {
           'Authorization': localStorage.getItem('auth_token') 
         })
       };
-      this.http.get<User>(environment.apiUrl+'/users/current', httpOptions).subscribe(user=>this.currentUser.next(user));
+      this.http.get<User>(environment.apiUrl+'/users/current', httpOptions).subscribe(user=>{this.currentUser.next(user)});
       return this.currentUser$;
     } 
 

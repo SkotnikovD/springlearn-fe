@@ -1,4 +1,9 @@
 <h3>Login</h3>
+
+<a id="gsignin_btn" (click)="signInWithGoogle()"> <img src="assets/img/gsignin.png"/></a>
+
+<hr class="hr-text" data-content="OR">
+
 <form [formGroup]="loginForm" (ngSubmit)="doLogin(loginForm.value)">
   <div class="spacer">
     <label for="login">Email</label>

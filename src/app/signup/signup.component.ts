@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { handleError } from '../error-handler';
 import { catchError } from 'rxjs/operators';
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) {}
@@ -22,7 +23,10 @@ export class SignupComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private authService : AuthService,
-    private router: Router) { 
+    private router: Router,
+    private socialAuthService: SocialAuthService,
+    ) 
+    { 
     this.signupForm=formBuilder.group({
       'name' : [null, [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       'login' : [null, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
@@ -37,6 +41,11 @@ export class SignupComponent implements OnInit {
     this.authService.signup(signupInfo.name, signupInfo.login, signupInfo.password, this.selectedFile ? this.selectedFile.file : undefined)
     .subscribe(resp=> this.router.navigate(['']),
     error=> {console.error(error);  alert (`Error: ${error.error.clientMessage}`)});
+  }
+
+  signUpWithGoogle(): void {
+    this.authService.signinWithGoogle();
+    this.router.navigate(['']);
   }
 
   uploadAvatar(imageInput: any) {

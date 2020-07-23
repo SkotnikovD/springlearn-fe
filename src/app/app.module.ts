@@ -15,6 +15,8 @@ import { SignupComponent } from './signup/signup.component';
 import { AuthGuardService } from './auth-guard.service';
 import { AvatarService } from './avatar.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
+
 // import { HttpErrorInterceptor } from './http-error.interceptor';
 
 @NgModule({
@@ -22,7 +24,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      SocialLoginModule
    ],
    declarations: [
       AppComponent,
@@ -43,6 +46,18 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
       //    useClass: HttpErrorInterceptor,
       //    multi: true
       //  }
+      {
+         provide: 'SocialAuthServiceConfig',
+         useValue: {
+           autoLogin: false,
+           providers: [
+             {
+               id: GoogleLoginProvider.PROVIDER_ID,
+               provider: new GoogleLoginProvider('936582526797-u1pokba5jmcvv3nlqo4p436dooin0a3u.apps.googleusercontent.com'),
+             },
+           ],
+         } as SocialAuthServiceConfig,
+       }
    ],
    bootstrap: [
       AppComponent
