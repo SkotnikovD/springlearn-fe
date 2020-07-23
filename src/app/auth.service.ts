@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from './../environments/environment';
 import { tap, map, mergeMap, catchError } from 'rxjs/operators';
 import { AvatarService } from './avatar.service';
-import { User } from './models/user';
+import { GetUserDto } from './models/user';
 import { handleError, handleErrorAndRethrow } from './error-handler';
 import { SocialAuthService, GoogleLoginProvider } from 'angularx-social-login';
 
@@ -25,8 +25,8 @@ export class AuthService {
       if (this.isLogin()) this.renewCurrentUser();
     }
 
-    private currentUser = new BehaviorSubject<User>(null);
-    currentUser$: Observable<User> = this.currentUser.asObservable(); 
+    private currentUser = new BehaviorSubject<GetUserDto>(null);
+    currentUser$: Observable<GetUserDto> = this.currentUser.asObservable(); 
     
     signinWithGoogle() {
       this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(socialUser=>{
@@ -47,8 +47,8 @@ export class AuthService {
     }
 
   signup(name:string, email: string, password: string, avatar: File) : Observable<HttpResponse<void>>{ 
-    return this.http.post<User>(this.usersUri + '/signup', {name: name, login: email, password: password})
-    .pipe(mergeMap((resp: User)=>{
+    return this.http.post<GetUserDto>(this.usersUri + '/signup', {name: name, login: email, password: password})
+    .pipe(mergeMap((resp: GetUserDto)=>{
       var loginResp: Observable<HttpResponse<void>> = this.login(email, password).pipe(tap(()=>{if (avatar) this.avatarService.uploadAvatar(avatar).subscribe(avatarUploaded=>this.renewCurrentUser())}))
       //loginResp.subscribe(()=>{if (avatar) this.avatarService.uploadAvatar(avatar).subscribe(avatarUploaded=>this.renewCurrentUser())});
       return loginResp;
@@ -68,14 +68,14 @@ export class AuthService {
      return localStorage.getItem('auth_token')
     }
 
-    renewCurrentUser(): Observable<User>{
+    renewCurrentUser(): Observable<GetUserDto>{
       let httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           'Authorization': localStorage.getItem('auth_token') 
         })
       };
-      this.http.get<User>(environment.apiUrl+'/users/current', httpOptions).subscribe(user=>{this.currentUser.next(user)});
+      this.http.get<GetUserDto>(environment.apiUrl+'/users/current', httpOptions).subscribe(user=>{this.currentUser.next(user)});
       return this.currentUser$;
     } 
 

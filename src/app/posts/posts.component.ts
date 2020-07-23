@@ -4,7 +4,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { PostWithAuthor } from '../models/post';
 import { Observable } from 'rxjs';
-import { User } from '../models/user';
+import { GetUserDto } from '../models/user';
 
 @Component({
   selector: 'app-posts',
@@ -13,7 +13,7 @@ import { User } from '../models/user';
 })
 export class PostsComponent implements OnInit {
   
-  currentUser$: Observable<User>;
+  currentUser$: Observable<GetUserDto>;
   
   constructor(
     private postService : PostService,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
-import { User } from '../models/user';
+import { GetUserDto } from '../models/user';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class TopBarComponent implements OnInit {
 
-  currentUser$: Observable<User>;
+  currentUser$: Observable<GetUserDto>;
   
   constructor(
     private authService: AuthService,

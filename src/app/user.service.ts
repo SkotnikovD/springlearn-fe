@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from './models/user';
+import { GetUserDto } from './models/user';
 import { environment } from './../environments/environment';
 
 @Injectable({

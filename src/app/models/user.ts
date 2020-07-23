@@ -1,7 +1,6 @@
-export interface User {
+export interface GetUserDto {
     name: string;
     birthdayDate: Date;
     avatarThumbnailUrl: string;
     avatarFullsizeUrl: string;
-    roles: string [];
   }
