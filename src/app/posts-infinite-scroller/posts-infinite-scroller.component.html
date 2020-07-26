@@ -1,0 +1,21 @@
+<cdk-virtual-scroll-viewport itemSize="180" class="posts-scroll-viewport">
+    <li *cdkVirtualFor="let post of dataSource">
+        <div *ngIf="post" class="post-item">
+            <img class="avatar" *ngIf="!post.author.avatarThumbnailUrl" src="https://avatars-thumbnail.s3-eu-west-1.amazonaws.com/avatar.png">
+            <img class="avatar" *ngIf="post.author.avatarThumbnailUrl" src="{{post.author.avatarThumbnailUrl}}">
+            <span class="username"> {{post.author.name}}</span>
+            <button *ngIf="(currentUser$ | async)?.roles.includes('ADMIN')" (click)="deletePost(post)" type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            <div class="post-text">
+                {{post.text}}
+            </div>
+            <div class="post-date">
+                {{post.createdDate | date}}
+            </div>
+        </div>
+        <div *ngIf="!post">
+            Loading ...
+          </div>
+    </li>
+  </cdk-virtual-scroll-viewport>

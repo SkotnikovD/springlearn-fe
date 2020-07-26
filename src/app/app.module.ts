@@ -16,6 +16,8 @@ import { AuthGuardService } from './auth-guard.service';
 import { AvatarService } from './avatar.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
+import { ScrollingModule} from '@angular/cdk/scrolling';
+import { InfiniteScrollerComponent } from './posts-infinite-scroller/posts-infinite-scroller.component';
 
 // import { HttpErrorInterceptor } from './http-error.interceptor';
 
@@ -25,7 +27,8 @@ import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 
       AppRoutingModule,
       HttpClientModule,
       ReactiveFormsModule,
-      SocialLoginModule
+      SocialLoginModule,
+      ScrollingModule
    ],
    declarations: [
       AppComponent,
@@ -33,7 +36,8 @@ import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 
       TopBarComponent,
       LoginComponent,
       NewPostComponent,
-      SignupComponent
+      SignupComponent,
+      InfiniteScrollerComponent
    ],
    providers: [
       PostService,

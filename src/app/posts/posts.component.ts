@@ -25,10 +25,10 @@ export class PostsComponent implements OnInit {
   posts : Observable<PostWithAuthor[]>;
 
   ngOnInit() {
-    this.posts = this.postService.getPosts();
+   // this.posts = this.postService.getPosts();
   }
 
   deletePost(post: PostWithAuthor): void{
-    this.postService.deletePost(post.postId).subscribe(undef=>this.posts = this.postService.getPosts())
+    //this.postService.deletePost(post.postId).subscribe(undef=>this.posts = this.postService.getPosts())
   }
 }

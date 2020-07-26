@@ -1,0 +1,52 @@
+.posts-scroll-viewport {
+    height: 100%;
+    width: 100%;
+  }
+
+.post-item{
+    background-color: rgb(255, 255, 255);
+    padding: 20px 20px 0px 20px;
+    margin: 8px;
+    border-radius: 4px;
+}
+
+.post-text{
+    margin: 25px 0 25px 25px;
+    border-radius: 4px;
+    word-wrap: break-word;
+}
+
+.post-date{
+    // float: right;
+    text-align: end;
+    padding: 10px 0;
+    border-top: 1px solid black;
+}
+.date{
+    // margin:0 0 0 auto;
+    // float: right;
+    // margin: 0 0 0px 0;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .username{
+      font-size: 22px;
+      margin-left: 10px;
+  }
+
+  button{
+    min-width:0;
+}
+
+cdk-virtual-scroll-viewport {
+ 
+    li {
+      list-style: none;
+    }
+  }

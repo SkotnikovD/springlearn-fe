@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
@@ -20,8 +20,14 @@ constructor(
 ) { 
 }
 
-getPosts(): Observable<PostWithAuthor[]> {
-  return this.http.get<PostWithAuthor[]>(this.postsUrl)
+getPosts(lastId : number, pageSize: number): Observable<PostWithAuthor[]> {
+  let params = new HttpParams();
+  params = params.append("pageSize", pageSize.toString());
+  if(lastId!=null){
+    params = params.append("lastId", lastId.toString());
+  }
+
+  return this.http.get<PostWithAuthor[]>(this.postsUrl, {params: params})
   .pipe(
     // catchError(handleError<PostWithAuthor[]>([]))
   );
